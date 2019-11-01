@@ -1,0 +1,54 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class ASTestJava {
+
+	/*http://user:passwd@machine:port/path*/
+	private static boolean URLParser(String url){
+		String alphaN="[a-zA-Z0-9][a-zA-Z0-9]*";
+		String alphaNwS="[a-zA-Z0-9][a-zA-Z0-9]*/?";
+		String numOnly="[0-9][0-9]*";
+		String regex="http://"+alphaN+":"+alphaN+"@"+alphaN+":"+numOnly+"/(("+alphaNwS+")*";
+				try {
+		            Pattern patt = Pattern.compile(regex);
+		            Matcher matcher = patt.matcher(url);
+		            return matcher.matches();
+		        } catch (RuntimeException e) {
+		        return false;	
+		        }
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Inserer un fichier");
+		Scanner sc = new Scanner(System.in);
+		String file=sc.nextLine();
+		System.out.println(URLParser("http://user:passwd@machine:port/path"));
+		System.out.println(URLParser("X11/xkb/symbols/br:"));
+		System.out.println(URLParser("lynx.cfg:#"));
+		System.out.println(URLParser("http://aaa:bbb@ccc:123/aaa/sss/"));
+		
+		BufferedReader br=null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+			String line="";
+			while ((line = br.readLine()) != null) {
+			   System.out.println(line+" => "+URLParser(line));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+	
+}
+

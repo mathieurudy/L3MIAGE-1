@@ -1,0 +1,126 @@
+
+PARSER_BEGIN(Expr)
+
+/** Expressions arithmetiques. */
+public class Expr {
+
+  /** Main entry point. */
+  public static void main(String args[]) throws ParseException {
+    Expr parser = new Expr(System.in);
+    parser.listeAffExpr();
+  }
+
+}
+
+PARSER_END(Expr)
+
+SKIP :
+{
+  " "
+| "\t"
+}
+
+TOKEN :
+{
+  <TOKEN_ENTIER: ["0"-"9"](["0"-"9"])* >
+| <TOKEN_LET: "let">
+| <TOKEN_IDENTIF: ["A"-"Z","a"-"z"](["A"-"Z","a"-"z"])*>
+| <TOKEN_EOL: ["\n","\r"]>
+| <TOKEN_PAR_OUV: "(">
+| <TOKEN_PAR_FER: ")">
+| <TOKEN_PLUS: "+">
+| <TOKEN_MOINS: "-">
+| <TOKEN_MULT: "*">
+| <TOKEN_DIV: "/">
+| <TOKEN_CRO_OUV: "[">
+| <TOKEN_CRO_FER: "]">
+| <TOKEN_PT_VIRGULE: ";">
+| <TOKEN_2_PTS: ":">
+| <TOKEN_CAR: "[A-Za-z]">
+| <TOKEN_ACC_OUV: "{">
+| <TOKEN_ACC_FER: "}">
+| <TOKEN_VIRGULE: ",">
+
+| <TOKEN_EQUAL: "=">
+}
+
+/** Root production. */
+
+void listeExpression():
+{}
+{
+ ( expression() <TOKEN_EOL> )* <EOF>
+}
+
+void listeAffExpr():
+{}
+{
+	affExpr() listeAffExpr()
+| {}
+}
+
+void affExpr() :
+{}
+{
+affectation()
+|	expression()
+
+}
+
+void affectation():
+{}
+{
+
+	 ( <TOKEN_LET> <TOKEN_IDENTIF> <TOKEN_EQUAL>  expression() <TOKEN_EOL> { System.out.println("Affectation ok"); })* <EOF>
+
+}
+
+void expression() :
+{}
+{
+   terme()   suiteExpression()
+  { System.out.println("Expression Ok."); }
+}
+
+void terme() :
+{}
+{
+  facteur() suiteTerme()
+}
+
+void suiteExpression() :
+{}
+{
+  <TOKEN_PLUS> terme() suiteExpression()
+| <TOKEN_MOINS> terme() suiteExpression()
+| {}
+}
+
+void suiteTerme() :
+{}
+{
+  <TOKEN_MULT> facteur() suiteTerme()
+| <TOKEN_DIV> facteur() suiteTerme()
+| {}
+}
+
+void facteur() :
+{}
+{
+  <TOKEN_PAR_OUV> expression() <TOKEN_PAR_FER>
+|  atome()
+}
+
+void atome() :
+{}
+{
+  <TOKEN_MOINS> valeur()
+| valeur()
+}
+
+void valeur():
+{}
+{
+  <TOKEN_IDENTIF>
+| <TOKEN_ENTIER>
+}

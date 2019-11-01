@@ -1,0 +1,39 @@
+Question 8:
+iconv -f iso-8859-1 -t utf-8 germinal-iso8859.txt -o germinal-utf8.txt
+
+Question 9:
+sed -e 's/[[:punct:]][[:punct:]]*/\ /g'  germinal-utf8.txt 
+
+Question 10:
+sed -e 's/[[:blank:]][[:blank:]]*/\n/g'  germinal-utf8.txt
+
+Question 11:
+sed -e 's/[[:punct:]][[:punct:]]*/\ /g' -e 's/[[:blank:]][[:blank:]]*/\n/g' germinal-utf8.txt 
+sed -e 's/[[:punct:]][[:punct:]]*/\ /g' -e 's/[[:blank:]][[:blank:]]*/\n/g' -e 's/\n\n*/\n/g' germinal-utf8.txt 
+sed -e 's/[[:punct:]][[:punct:]]*/\ /g' -e 's/[[:blank:]][[:blank:]]*/\n/g' germinal-utf8.txt | tr -s '\n' 
+sed -e 's/[[:punct:]][[:punct:]]*/\ /g' -e 's/[[:blank:]][[:blank:]]*/\n/g' germinal-utf8.txt | tr -s '\n' | sort | uniq
+
+Question 12:
+sed -e 's/^/\<tr\>\<td\>/' -e 's/\t\t*/\<\/td\>\<td\>/g' -e 's/$/\<\/td\>\<\/tr\>/' employees.tsv
+
+Question 13:
+sed -e '1 i <html>\n<head><style>table, th, td { border: 1px solid black; }\ntable { border-collapse: collapse; }\n td,th {padding: 5px;}</style></head>\n<body><table><tr><th>Name</th><th>Position</th><th>Office</th><th>Age</th><th>Start date</th><th>Salary</th></tr>\n\n' employees.tsv
+
+Question 14:
+sed -e '$ a </table></body></html>' employees.tsv 
+
+Question 15:
+
+contenu du fichier tsvtohtml.sed
+=========
+1 i <html>\n<head><style>table, th, td { border: 1px solid black; }\ntable { border-collapse: collapse; }\n td,th {padding: 5px;}</style></head>\n<body><table><tr><th>Name</th><th>Position</th><th>Office</th><th>Age</th><th>Start date</th><th>Salary</th></tr>\n\n 
+$ a </table></body></html>
+s/^/\<tr\>\<td\>/
+s/\t\t*/\<\/td\>\<td\>/g
+s/$/\<\/td\>\<\/tr\>/
+=========
+
+sed -f tsvtohtml.sed employees.tsv > employees_theo_florian.html
+
+
+

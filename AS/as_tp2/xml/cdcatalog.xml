@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--<?xml-stylesheet href="cdcatalog.xsl" type="text/xsl"?>-->
+
+<catalog name="CDthèque">
+  <cd cover="https://upload.wikimedia.org/wikipedia/en/f/f7/Neil_Young_%26_Crazy_Horse-Live_Rust_%28album_cover%29.jpg">
+    <title>Live Rust</title>
+    <artist>Neil Young and Crazy Horse</artist>
+    <country>USA</country>
+    <company>Reprise Records</company>
+    <year>1979</year>
+  </cd>
+  <cd cover='https://upload.wikimedia.org/wikipedia/en/9/9f/Led_Zeppelin_-_Houses_of_the_Holy.jpg'>
+    <title>Houses of the Holy</title>
+    <artist>Led Zeppelin</artist>
+    <country>UK</country>
+    <company>Atlantic Records</company>
+    <year>1973</year>
+  </cd>
+</catalog>

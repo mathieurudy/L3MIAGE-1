@@ -1,0 +1,121 @@
+/*
+ * grammaire pour picocobol
+ */
+
+package microcobol;
+import java.util.*;
+
+terminal POINT;
+terminal DIVISION, SECTION;
+terminal PROGRAMID, IDENTIFICATION, DATA, WS;
+terminal END, PROGRAM;
+terminal PROCEDURE, PIC, VALUE;
+terminal IS, IF, THEN, ENDIF, ELSE, NOT, PERFORM, UNTIL,ENDPERFORM;
+terminal MOVE, ADD, SUBSTRACT, MULTIPLY, DIVIDE;
+terminal INTO, TO, GIVING, BY, FROM;
+terminal DISPLAY, RUN, STOP;
+
+terminal String IDENT, CHAINE, NOMBRE, IMAGE, OP;
+
+nonterminal Programme programme;
+nonterminal IdDiv iddiv;
+nonterminal String nomprog;
+nonterminal DataDiv datadiv;
+nonterminal WorkingSect workingsect;
+nonterminal List<Data> dataliste;
+nonterminal Data data;
+nonterminal ProcDiv procdiv;
+nonterminal List<Paragraphe> listepara;
+nonterminal Paragraphe paragraphe;
+nonterminal List<Phrase> listephrases;
+nonterminal Phrase phrase;
+nonterminal Instruction instruction;
+nonterminal List<Instruction> listeinst;
+nonterminal Objet objet;
+nonterminal List<Objet> listeobjets;
+nonterminal Litteral litteral;
+nonterminal Variable variable;
+nonterminal Integer niveau;
+nonterminal Condition condition;
+
+start with programme;
+
+programme	::= iddiv:id datadiv:data procdiv:proc END PROGRAM IDENT POINT
+		{: RESULT = new Programme(id, data, proc); :}
+		| iddiv:id procdiv:proc END PROGRAM IDENT POINT
+		{: RESULT = new Programme(id, null, proc); :}
+		| iddiv:id datadiv:data END PROGRAM IDENT POINT
+		{: RESULT = new Programme(id, data, null); :}
+		| iddiv:id END PROGRAM IDENT POINT
+		{: RESULT = new Programme(id, null, null); :};
+iddiv		::= IDENTIFICATION DIVISION POINT nomprog:n
+		{: RESULT = new IdDiv(n); :};
+nomprog		::= PROGRAMID IDENT:n POINT
+		{: RESULT = n; :};
+datadiv         ::= DATA DIVISION POINT workingsect:w
+		{: RESULT = new DataDiv(w); :};
+workingsect	::= WS SECTION POINT dataliste:l
+		{: RESULT = new WorkingSect(l); :};
+dataliste	::= dataliste:dl data:d
+		{: dl.add(d); RESULT = dl; :}
+		| data:d
+		{: RESULT = new ArrayList<Data>(Collections.singletonList(d)); :};
+data		::= niveau:n IDENT:id PIC IMAGE:im POINT
+		{: RESULT = new Data(id, im); :};
+listeobjets	::= listeobjets:l objet:o
+		{: l.add(o); RESULT = l; :}
+		| objet:o
+		{: RESULT = new ArrayList<Objet>(Collections.singletonList(o)); :};
+objet		::= litteral:l
+		{: RESULT = l; :}
+		| variable:v
+		{: RESULT = v; :};
+litteral	::= NOMBRE:s
+		{: RESULT = new Nombre(s); :}
+		| CHAINE:s
+		{: RESULT = new Chaine(s); :};
+variable	::= IDENT:s
+		{: RESULT = new Variable(s); :};
+niveau		::= NOMBRE:s
+		{: RESULT = Integer.parseInt(s); :};
+procdiv		::= PROCEDURE DIVISION POINT listepara:l
+		{: RESULT = new ProcDiv(l); :};
+listepara	::= listepara:lp paragraphe:p
+		{: lp.add(p); RESULT = lp; :}
+		| paragraphe:p
+		{: RESULT = new ArrayList<Paragraphe>(Collections.singletonList(p)); :};
+paragraphe	::= IDENT:i POINT listephrases:l
+		{: RESULT = new Paragraphe(i, l); :};
+listephrases	::= listephrases:l phrase:p
+		{: l.add(p); RESULT = l; :}
+		| phrase:p
+		{: RESULT = new ArrayList<Phrase>(Collections.singletonList(p)); :};
+phrase		::= instruction:i POINT
+		{: RESULT = new Phrase(i); :};
+listeinst	::= listeinst:l instruction:i
+		{: l.add(i); RESULT = l; :}
+		| instruction:l
+		{: RESULT = new ArrayList<Instruction>(Collections.singletonList(l)); :};
+condition ::= objet:x IS OP:o objet:y
+		{: RESULT = new Condition(x,y, false, o); :}
+    |objet:x IS NOT OP:o objet:y
+    {: RESULT = new Condition(x,y, true, o); :};
+
+instruction	::= MOVE objet:x TO variable:y
+		{: RESULT = new MoveInst(x, y); :}
+		| STOP RUN
+		{: RESULT = new StopInst(); :}
+		| ADD objet:x TO variable:y
+		{: RESULT = new AddInst(x, y); :}
+		| SUBSTRACT objet:x FROM variable:y
+		{: RESULT = new SubstractInst(x, y); :}
+		| MULTIPLY  variable:y BY objet:x
+		{: RESULT = new MultiplyInst(x, y); :}
+		| DIVIDE objet:x INTO variable:y
+		{: RESULT = new DivideInst(x, y); :}
+		| IF condition:c THEN listeinst:l1 ELSE listeinst:l2 ENDIF
+		{: RESULT = new IfInst(c, l1, l2); :}
+    | DISPLAY listeobjets:o
+    {: RESULT = new DisplayInst(o); :}
+    | PERFORM UNTIL condition:c listeinst:t ENDPERFORM
+		{: RESULT = new PerformInst(c,t); :};

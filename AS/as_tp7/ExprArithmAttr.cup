@@ -1,0 +1,77 @@
+// specification JavaCup pour les expressions arithm
+// on evalue les expressions au cours de l'analyse
+
+import java_cup.runtime.*;
+import java.util.HashMap ;
+
+action code {: HashMap laMap = new HashMap();
+public Integer fact(Integer eval){
+  int f;
+  if(eval.intValue() < 0){
+    f = -1;
+    for(int i = -2; i>= eval.intValue(); i--){
+       f *= i;
+    }
+  }else if(eval.intValue() > 0){
+    f = 1;
+    for (int i = 2; i <= eval.intValue(); i++) {
+      f *= i;
+    }
+  }else{
+    f = 0;
+  }
+  return new Integer(f);
+}
+:};
+
+
+/* Terminaux (elements sym retournes par Jlex). */
+
+terminal SET, POINTV, EGAL, PLUS, MOINS, MULT, DIV, PAROUV, PARFER, EXCLA; 
+terminal Integer ENTIER ;
+terminal String IDENT ;
+
+/* Non terminaux */
+
+non terminal instructions, inst, affect ;
+non terminal Integer expr, terme, facteur, atome ;
+
+
+/* La grammaire */
+start with instructions ;
+
+instructions ::= inst POINTV instructions
+                 | 
+                 ;
+inst ::= affect
+         | 
+         expr:val {: System.out.println("=>"+val); :} ;                
+affect ::= SET IDENT:id EGAL expr:val {: laMap.put(id,val);
+                                         System.out.println("ajout de ("+id+","+val+")"); :};
+expr ::= expr:eval PLUS terme:tval  {: RESULT = new Integer(eval.intValue() + tval.intValue()); :}
+         |
+         expr:eval MOINS terme:tval {: RESULT = new Integer(eval.intValue() - tval.intValue()); :}
+         |
+         terme:tval {: RESULT = tval; :};
+terme ::= terme:tval MULT facteur:fval {: RESULT = new Integer(tval.intValue()*fval.intValue()); :}
+          |
+          terme:tval DIV facteur:fval {: RESULT = new Integer(tval.intValue()/fval.intValue()); :}
+          |
+          facteur:fval {: RESULT = fval; :};
+facteur ::= MOINS atome:aval {: RESULT = new Integer(- aval.intValue()); :}
+            | 
+            PLUS atome:aval {: RESULT = aval ; :}
+            |
+            atome:aval {: RESULT = aval ; :}
+            |
+            PAROUV expr:eval PARFER {: RESULT = eval ; :}
+	    |
+	    EXCLA PAROUV expr:eval PARFER {: RESULT = fact(eval) ; :};
+atome ::= IDENT:id {: RESULT = (Integer)laMap.get(id); :}
+          |
+          ENTIER:val {: RESULT = val; :};
+
+
+
+
+

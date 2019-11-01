@@ -1,0 +1,14 @@
+IDENTIFICATION DIVISION.
+  PROGRAM-ID test.
+PROCEDURE DIVISION.
+  main.
+    MOVE 99 TO i.
+    PERFORM UNTIL i IS = 1
+      IF i IS = 1
+        THEN DISPLAY i "bouteille sur un mur"
+        ELSE DISPLAY i "bouteilles sur un mur"
+      END-IF
+      SUBSTRACT 1 FROM i
+    END-PERFORM.
+    STOP RUN.
+END PROGRAM test.

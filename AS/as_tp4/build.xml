@@ -1,0 +1,83 @@
+<project name="AS-TP3-JSON" default="dist" basedir=".">
+  <description>
+    build file for AS-TP3
+  </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="."/>
+  <property name="build" location="/tmp/build"/>
+  <property name="dist" location="dist"/>
+  
+  <path id="jflex_path">
+    <pathelement path="/usr/share/java/jflex.jar"/>
+  </path>
+  
+  <path id="cup_path">
+    <pathelement path="/usr/share/java/java_cup.jar"/>
+  </path>
+
+  <path id="cup-runtime_path">
+    <pathelement path="/usr/share/java/java_cup-runtime.jar"/>
+  </path>
+  
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="Q1-json-lex" depends="init"
+          description="compile the Q1-json-lex">
+    <mkdir dir="${build}/Q1-json-lex"/>
+    <!-- Compile the JFLex file -->
+    <java classname="jflex.Main">
+      <arg line="-d ${build}/Q1-json-lex"/>
+      <arg value="${src}/Q1-json-lex/json.lex"/>
+      <classpath refid="jflex_path"/>
+      <classpath refid="cup-runtime_path"/>
+    </java>
+
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}/Q1-json-lex;${build}/Q1-json-lex" destdir="${build}/Q1-json-lex">
+      <classpath refid="cup-runtime_path"/>
+      <exclude name="**/*.lex"/>
+    </javac>
+  </target>
+
+  <target name="Q2-json-ad" depends="init"
+          description="compile the Q2-json-ad">
+    <mkdir dir="${build}/Q2-json-ad"/>
+    <!-- Compile the JFLex file -->
+    <java classname="jflex.Main">
+      <arg line="-d ${build}/Q2-json-ad"/>
+      <arg value="${src}/Q2-json-ad/json.lex"/>
+      <classpath refid="jflex_path"/>
+      <classpath refid="cup-runtime_path"/>
+    </java>
+
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}/Q2-json-ad;${build}/Q2-json-ad" destdir="${build}/Q2-json-ad">
+      <classpath refid="cup-runtime_path"/>
+      <exclude name="**/*.lex"/>
+    </javac>
+  </target>
+
+
+  <target name="all" depends="Q1-json-lex,Q2-json-ad"/>
+  
+  <target name="dist" depends="all"
+        description="generate the distribution">
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/lib/tp3-${DSTAMP}.jar" basedir="${build}"/>
+  </target>
+
+  <target name="clean"
+        description="clean up">
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>

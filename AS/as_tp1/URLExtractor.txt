@@ -1,0 +1,135 @@
+X11/xkb/symbols/br:    // by Conectiva  (http://www.conectiva.com.br)
+X11/xkb/symbols/inet:    // See http://sourceforge.net/projects/omke for details on enabling
+X11/xkb/symbols/inet:    // See http://sourceforge.net/projects/omke for details on enabling
+X11/xkb/symbols/inet:    // See http://sourceforge.net/projects/omke for details on enabling
+X11/xkb/symbols/inet:    // See http://sourceforge.net/projects/omke for details on enabling
+X11/xkb/symbols/inet:    // See http://sourceforge.net/projects/omke for details on enabling
+X11/xkb/symbols/inet:    // See http://sourceforge.net/projects/omke for details on enabling
+X11/xkb/symbols/inet:    // See http://sourceforge.net/projects/omke for details on enabling
+X11/xkb/symbols/inet:    // http://linux.dd.com.au/quest/linux/keyboard/honeywell/
+X11/xkb/symbols/inet:    // See http://sourceforge.net/projects/omke for details on enabling
+X11/xkb/symbols/lt_std:// Minor modification by Rièardas Èepas according to http://sun3.mif.vu.lt/cs/TK4/lithkeyb.html
+X11/xkb/symbols/us_intl:// by Conectiva (http://www.conectiva.com.br)
+X11/xkb/symbols/ge_la://  http://members.tripod.com/~beso/html/L-K-COD.HTM
+X11/xkb/symbols/ge_ru://  http://members.tripod.com/~beso/html/RU-K-COD.HTM
+X11/xkb/symbols/ml:// Encoding    : Unicode (http://www.unicode.org)
+X11/xkb/symbols/sapmi:// http://www.hum.uit.no/a/trond/se-lat9-no-keys.html
+X11/xkb/symbols/sapmi:    // http://www.hum.uit.no/a/trond/se-lat9-sefi-keys.html
+X11/xkb/symbols/pc/br:// by Conectiva  (http://www.conectiva.com.br)"
+X11/xkb/symbols/pc/fr-latin9:// http://en.tldp.org/HOWTO/Francophones-HOWTO.html
+X11/xkb/symbols/pc/lt:// http://sun3.mif.vu.lt/cs/TK4/lithkeyb.html
+X11/xkb/symbols/pc/ml:// Encoding    : Unicode (http://www.unicode.org)
+X11/xkb/symbols/pc/sapmi:// http://www.hum.uit.no/a/trond/se-lat9-no-keys.html
+X11/xkb/symbols/pc/sapmi:    // http://www.hum.uit.no/a/trond/se-lat9-sefi-keys.html
+X11/xkb/symbols/pc/tel:    // See layout at http://www.indlinux.org/keymap/telugu.php
+X11/xkb/symbols/pc/tml:// Encoding	: TSCII (http://www.tscii.org)
+X11/xkb/symbols/pc/tml:// Encoding: TAB (http://www.tamilnet99.org)
+X11/xkb/symbols/pc/tml:// Encoding: Unicode (http://www.unicode.org)
+X11/xkb/symbols/tel:    // See layout at http://www.indlinux.org/keymap/telugu.php
+X11/xkb/symbols/tml:// Encoding	: TSCII (http://www.tscii.org)
+X11/xkb/symbols/tml:// Encoding: TAB (http://www.tamilnet99.org)
+X11/xkb/symbols/tml:// Encoding: Unicode (http://www.unicode.org)
+X11/xkb/README.enhancing:X Keyboard Extension: Protocol Specification <URL:http://www.x-
+X11/xkb/README.enhancing:<URL:http://www.tsu.ru/~pascal/en/xkb> often referenced throughout this docu-
+X11/xkb/README.enhancing:See Some Words  About XKB internals <URL:http://www.tsu.ru/~pas-
+X11/xkb/README.enhancing:<URL:http://www.tsu.ru/~pascal/en/xkb/gram-common.html> for more precise
+X11/xkb/README:http://www.x-docs.org/XKB/XKBproto.pdf
+X11/app-defaults/XF86Cfg:!! Copyright (c) 2000 by Conectiva S.A. (http://www.conectiva.com)
+Binary file X11/X matches
+Binary file alternatives/pager matches
+Binary file alternatives/infobrowser matches
+Binary file alternatives/cc matches
+Binary file alternatives/xdvi.bin matches
+Binary file alternatives/oxdvi.bin matches
+Binary file alternatives/kaffe-system/jre/lib/i386/libnative.a matches
+Binary file alternatives/kaffe-system/jre/bin/kaffe-bin matches
+Binary file alternatives/lynx matches
+Binary file alternatives/www-browser matches
+Binary file alternatives/ftp matches
+Binary file alternatives/emacs matches
+Binary file alternatives/gs matches
+alternatives/mozilla:# the License at http://www.mozilla.org/NPL/
+alternatives/x-www-browser:# the License at http://www.mozilla.org/NPL/
+Binary file alternatives/c++ matches
+apt/sources.list:deb http://debian.univ-mlv.fr/debian sid main non-free contrib
+apt/sources.list:deb http://debian.univ-mlv.fr/debian-non-US sid/non-US main non-free contrib
+apt/sources.list:# deb http://security.debian.org/ stable/updates main
+bash_completion:#   http://www.caliban.org/bash/index.shtml#completion
+cups/pstoraster.convs:#         WWW: http://www.cups.org
+cups/mime.convs:#         WWW: http://www.cups.org
+cups/mime.types:#         WWW: http://www.cups.org
+cups/client.conf:#         WWW: http://www.cups.org
+dpkg/origins/debian:Vendor-URL: http://www.debian.org/
+gtk/gtkrc.ka_GE.georgianacademy:# http://www.linuxi18n.org/locales/georgian/
+gtk/gtkrc.vi_VN.tcvn:# http://www.linuxi18n.org/locales/viet/
+gtk/gtkrc.vi_VN.viscii:# http://www.linuxi18n.org/locales/viet/
+gtk/gtkrc.vi:# http://www.linuxi18n.org/locales/viet/
+gtk/gtkrc.vi_VN.viscii111:# http://www.linuxi18n.org/locales/viet/
+init.d/README:http://www.debian.org/doc/debian-policy/
+lynx.cfg:# is available at http://www.hippo.ru/~hvv/lynxcfg_toc.html
+lynx.cfg:# STARTFILE can be remote, e.g. http://www.w3.org/default.html ,
+lynx.cfg:# http://www.subir.com/lynx/lynx_help/lynx_help_main.html
+lynx.cfg:DEFAULT_INDEX_FILE:http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/MetaIndex.html
+lynx.cfg:# Find RFC 1345 at http://www.ics.uci.edu/pub/ietf/uri/rfc1345.txt .
+lynx.cfg:# (http://www.ics.uci.edu/pub/ietf/uri/rfc2068.txt).
+lynx.cfg:# become http://www.wfbr.edu:8002/dir/lynx).  The prefixes will not be
+lynx.cfg:# http://www.nyu.edu without testing www.nyu.com).  Lynx will try to
+lynx.cfg:# and use "http://" as the default (e.g., gopher.wfbr.edu or gopher.wfbr.
+lynx.cfg:#	http://www.romulus2.com/articles/guides/misc/bitsbytes.shtml
+lynx.cfg:#	TRUSTED_EXEC:http://www.wfbr.edu/trusted/
+lynx.cfg:#   ALWAYS_TRUSTED_EXEC:http://www.more.net/<tab>/usr/local/kinetic/bin/who.sh
+lynx.cfg:#   ALWAYS_TRUSTED_EXEC:http://www.more.net/<tab>show users
+lynx.cfg:# Lynx respects RFC 1738 (http://www.ics.uci.edu/pub/ietf/uri/rfc1738.txt)
+lynx.cfg:#BIBP_GLOBAL_SERVER:http://usin.org/
+lynx.cfg:# it exists.   Defaults to http://bibhost/ for protocol conformance, but
+lynx.cfg:#BIBP_BIBHOST:http://bibhost/
+lynx.cfg:#http_proxy:http://some.server.dom:port/
+lynx.cfg:#https_proxy:http://some.server.dom:port/
+lynx.cfg:#ftp_proxy:http://some.server.dom:port/
+lynx.cfg:#gopher_proxy:http://some.server.dom:port/
+lynx.cfg:#news_proxy:http://some.server.dom:port/
+lynx.cfg:#newspost_proxy:http://some.server.dom:port/
+lynx.cfg:#newsreply_proxy:http://some.server.dom:port/
+lynx.cfg:#snews_proxy:http://some.server.dom:port/
+lynx.cfg:#snewspost_proxy:http://some.server.dom:port/
+lynx.cfg:#snewsreply_proxy:http://some.server.dom:port/
+lynx.cfg:#nntp_proxy:http://some.server.dom:port/
+lynx.cfg:#wais_proxy:http://some.server.dom:port/
+lynx.cfg:#finger_proxy:http://some.server.dom:port/
+lynx.cfg:#cso_proxy:http://some.server.dom:port/
+lynx.cfg:# http://www.openvms.digital.com/cd/XV310A/ subdirectories.  You
+lynx.cfg:# file, or in src/HTInit.c.  See http://www.internic.net/rfc/rfc1524.txt
+lynx.cfg:#	RULE:Redirect	http://old.server/*	http://new.server/*
+modules.conf:# Crypto modules (see http://www.kerneli.org/)
+modules.conf.old:# Crypto modules (see http://www.kerneli.org/)
+modutils/arch/s390:# on http://oss.software.ibm.com/developerworks/opensource/linux390/docu.html
+modutils/aliases:# Crypto modules (see http://www.kerneli.org/)
+mplayer/codecs.conf:; http://www.morgan-multimedia.com/dev/codec_spec.htm
+mplayer/codecs.conf:; http://www.morgan-multimedia.com/dev/directshow_dec_spec.htm
+mplayer/codecs.conf:; VSS codecs (http://vsofts.com/solutions.html):
+mplayer/codecs.conf:; http://www.alaris.com/movies/toocool.vgm
+mplayer/codecs.conf:; sample videos: http://www.techsmith.com/products/camtasia/examplevideos.asp
+mplayer/codecs.conf:  comment "driver at http://codeczone.virtualave.net/FXIMCAUD.zip"
+mplayer/codecs.conf:; http://www.nctsoft.com/products/NCTALFCD/
+ntp.conf:#  ***  <http://www.pool.ntp.org/#join>  ***
+protocols:# Updated from http://www.iana.org/assignments/protocol-numbers and other
+services:# Updated from http://www.iana.org/assignments/port-numbers and other
+services:# sources like http://www.freebsd.org/cgi/cvsweb.cgi/src/etc/services .
+texmf/updmap.d/00updmap.cfg:# CSTeX; http://math.feld.cvut.cz/olsak/cstex/
+texmf/latex/fontmath.cfg:%%    http://www.latex-project.org/lppl.txt
+texmf/latex/fonttext.cfg:%%    http://www.latex-project.org/lppl.txt
+texmf/latex/preload.cfg:%%    http://www.latex-project.org/lppl.txt
+texmf/latex/adrplaner.cfg:%%   http://www.latex-procejt.org/lppl.txt
+texmf/latex/adrdir.cfg:%%   http://www.latex-procejt.org/lppl.txt
+texmf/latex/adrsmall.cfg:%%   http://www.latex-procejt.org/lppl.txt
+texmf/latex/htex4ht.cfg:%%    http://www.latex-project.org/lppl.txt
+texmf/platex/hyphen.cfg:%%    http://www.latex-project.org/lppl.txt
+wgetrc:#http_proxy = http://proxy.yoyodyne.com:18023/
+wgetrc:#ftp_proxy = http://proxy.yoyodyne.com:18023/
+http://Jojo:lApIn@www.exemple.com:8888/chemin/acces
+http://Jojo@www.exemple.com:8888/chemin/acces
+http://Jojo@www.exemple.com/chemin/acces
+http://igm.univmlv.fr
+http://:lApIn@www.exemple.com:8888/chemin/acces?q=req#frag
+http://igm.univ-mlv.fr
+http://www-igm.univ-mlv.fr

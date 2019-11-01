@@ -1,0 +1,30 @@
+Question 1:
+
+egrep 'A*' poesies.txt
+Tous les mots commençant par A.
+
+Question 2:
+
+egrep 'A*|t$' poesies.txt
+
+Question 3 :
+egrep -i '[aeiouy]' poesies.txt
+
+Question 4 :
+egrep '?a.*e.*i.*o.*u.*' poesies.txt
+
+Question 5 :
+egrep '(a[^aeiouy]*\b)?(e[^aeiouy]*\b)?(i[^aeiouy]*\b)?(o[^aeiouy]*\b)?(u[^aeiouy]*\b)?' poesies.txt
+
+au sens strict sur les mots
+
+Question 6 :
+egrep '*c*i*' poesies.txt
+
+au sens large
+
+Question 7 :
+egrep '\w{9}' poesies.txt
+
+
+

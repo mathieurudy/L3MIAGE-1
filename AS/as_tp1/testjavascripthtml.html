@@ -1,0 +1,142 @@
+<html>  
+<head>
+  <title>JavaScript : Expressions regulieres</title>
+  <meta name="author" content="">
+  <meta name="description content="ExpReg JavaScript">
+
+
+<style type="text/css">
+body {
+	background-color: white;
+	color: black;
+	margin-top:5pt;
+	margin-left:5pt;
+	margin-right:5pt;
+	font-family: serif;
+	width: 600px ;
+	margin-left: auto ;
+	margin-right: auto ;
+}
+
+h1 {font: 18pt cursive; color:black; text-align:center;}
+
+table {
+	margin-top: 5pt;
+	padding-top: 5pt;
+	width: 588px ;
+	margin-left: auto ;
+	margin-right: auto ;
+	border: none; border-width: 1pt; border-collapse: collapse; empty-cells: show
+}
+
+td {border: solid; border-width: 1pt}
+th{border: groove; border-width: 1pt; background-color:#EEBB33}
+
+form.ex {
+	background-color: #FFFFCC;
+	border-style:solid;
+	border-color:#FFFF88;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<h1>Expressions rationnelles RegExp() </h1>
+
+
+<script type="text/javascript">
+<!--
+var modele="";
+var texte="";
+var reg1, reg2;
+
+function Chercher() {
+	with(window.document.monform){
+		modele = exp.value;
+		texte = phrase.value;
+		var globalmod='';
+		var insensitivemod='';
+		var multilinemod='';
+		var modifiers='';
+		if (global.checked) globalmod='g';
+		if (insensitive.checked) insensitivemod='i';
+		if (multiline.checked) multilinemod='m';
+		modifiers=globalmod+insensitivemod+multilinemod;
+		if (!reg1 || !global.checked) 
+		  reg1 = new RegExp(modele, modifiers);
+		reg2 = new RegExp(modele, modifiers);
+			
+		res1.value = reg1.test(texte);
+		res4.value = reg1.exec(texte);
+		res2.value = texte.search(reg2);
+		res3.value = texte.match(reg2);
+	}
+}
+
+function Effacer(n) {
+	with(window.document.monform){
+		if (n==1) {
+			phrase.value=" ";
+			exp.value="";
+		}
+		res1.value="";
+		res2.value="";
+		res3.value="";
+		res4.value="";
+	}
+}
+// -->
+</script>
+
+Voici un formulaire qui vous permet de tester les r&eacute;sultats trouv&eacute;s par
+les m&eacute;thodes test, search et match pour un texte donn&eacute; et pour une
+expression rationnelle donn&eacute;e.
+<br/>
+<em>l'expression entr&eacute;e ne doit pas comporter les / /</em>
+<p>
+<form name="monform" class="ex">
+<table>
+	<tr>
+		<td colspan="2">Entrez un texte : <BR>
+		  <textarea name="phrase" rows="3" cols="40" wrap="virtual">tel : 04 55 89 78 13</textarea>
+		</td>
+		<td style="font-size:smaller;">Modifiers:<br/>
+		<input type="checkbox" name="global">global</input><br/>
+		<input type="checkbox" name="insensitive">insensitive</input><br/>
+		<input type="checkbox" name="multiline">multiline</input>
+		</td>
+	</tr>
+	<tr>
+		<td>expression</td>
+		<td><input type="text" name="exp" size="30" value="\d{2}"></td>
+		<td><button type="button" value="" onClick="Chercher()">&nbsp;chercher</button></td>
+	</tr>
+	<tr>
+		<th colspan="2">r&eacute;sultat avec :</th>
+		<td><button type="button" onClick="Effacer(1)">&nbsp;&nbsp;Effacer&nbsp;&nbsp;<br/>Tout</button></td>		
+	</tr>
+	<tr>	
+		<td>exp.test(texte)</td>
+		<td><input type="text" name="res1" size="30"></td>
+		<td  colspan="1" rowspan="4"><button type="button" onClick="Effacer(2)">Effacer<br> R�sultats</button></td>
+	</tr>
+	<tr>
+		<td>exp.exec(texte)</td>
+		<td><input type="text" name="res4" size="30"></td>
+	</tr>
+	<tr>
+		<td>texte.search(exp)</td>
+		<td><input type="text" name="res2" size="30"></td>
+	</tr>
+	<tr>
+		<td>texte.match(exp)</td>
+		<td><input type="text" name="res3" size="30"></td>
+	</tr>
+</table>
+</form>
+
+</body>
+</html>

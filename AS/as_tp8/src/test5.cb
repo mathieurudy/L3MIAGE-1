@@ -1,0 +1,20 @@
+IDENTIFICATION DIVISION.
+  PROGRAM-ID test4.
+DATA DIVISION.
+  WORKING-STORAGE SECTION.
+    77 i PIC 99.
+    77 k PIC 99.
+PROCEDURE DIVISION.
+  main.
+    MOVE 99 TO i.
+    PERFORM UNTIL i IS = 1
+      IF i IS = 1
+        THEN DISPLAY i "bouteille sur un mur"
+        ELSE DISPLAY i "bouteilles sur un mur"
+      END-IF
+      COMPUTE i = i - 1
+      COMPUTE k = (i ^ 2) + 5 * i
+    END-PERFORM.
+    STOP RUN.
+END PROGRAM test4.
+

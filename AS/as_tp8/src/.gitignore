@@ -1,0 +1,6 @@
+*.class
+classes
+microcobol.jar
+Yylex.java*
+parser.java
+sym.java

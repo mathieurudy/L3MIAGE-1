@@ -1,0 +1,78 @@
+// specification JavaCup pour les expressions arithm
+// on evalue les expressions au cours de l'analyse
+
+import java_cup.runtime.*;
+import java.util.HashMap ;
+
+action code {: HashMap laMap = new HashMap();
+public Integer fact(Integer eval){
+  int f;
+  if(eval.intValue() < 0){
+    f = -1;
+    for(int i = -2; i>= eval.intValue(); i--){
+       f *= i;
+    }
+  }else if(eval.intValue() > 0){
+    f = 1;
+    for (int i = 2; i <= eval.intValue(); i++) {
+      f *= i;
+    }
+  }else{
+    f = 0;
+  }
+  return new Integer(f);
+}
+:};
+
+
+/* Terminaux (elements sym retournes par Jlex). */
+
+terminal SET, POINTV, EGAL, PLUS, MOINS, MULT, DIV, PAROUV, PARFER; 
+terminal Integer ENTIER ;
+terminal String IDENT ;
+
+/* Non terminaux */
+
+non terminal instructions, inst, affect ;
+non terminal Integer expr, atome ;
+
+/* Declaration des priorites et des associatives */
+
+precedence left PLUS, MOINS;
+precedence left MULT, DIV;
+
+
+/* La grammaire */
+start with instructions ;
+
+instructions ::= inst POINTV instructions
+                 | 
+                 ;
+inst ::= affect
+         | 
+         expr:val {: System.out.println("=>"+val); :} ;                
+affect ::= SET IDENT:id EGAL expr:val {: laMap.put(id,val);
+                                         System.out.println("ajout de ("+id+","+val+")"); :};
+expr ::= expr:eval PLUS expr:tval  {: RESULT = new Integer(eval.intValue() + tval.intValue()); :}
+         |
+         expr:eval MOINS expr:tval {: RESULT = new Integer(eval.intValue() - tval.intValue()); :}
+         |
+	 expr:eval MULT expr:tval {: RESULT = new Integer(eval.intValue()*tval.intValue()); :}
+	 |
+	 expr:eval DIV expr:tval {: RESULT = new Integer(eval.intValue()/tval.intValue()); :}
+	 |
+         PAROUV expr:tval PARFER {: RESULT = (tval) ; :}
+	 |
+	 atome:aval {: RESULT = aval ; :}
+	 |
+	 PLUS atome:aval {: RESULT = aval ; :}
+	 |
+	 MOINS atome:aval {: RESULT = new Integer(- aval.intValue()); :};
+atome ::= IDENT:id {: RESULT = (Integer)laMap.get(id); :}
+          |
+          ENTIER:val {: RESULT = val; :};
+
+
+
+
+

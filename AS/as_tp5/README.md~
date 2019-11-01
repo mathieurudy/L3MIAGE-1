@@ -1,0 +1,218 @@
+![](logo/ustl-ufr.jpg)
+
+Informatique  
+L3S5 Miage
+
+* * *
+
+Analyse Syntaxique – TP4
+========================
+
+Analyse récursive descendante
+-----------------------------
+
+### Un exemple
+
+Vous trouverez ci-dessous un analyseur syntaxique qui reconnaît les commandes dont la syntaxe est celle d’un exercice vu en TD. Pour rappel:
+
+*   Une commande est composée de 4 parties dont seule la première est obligatoire.
+*   la première partie est constituée du nom de la commande (un identificateur de commande).
+*   la deuxième partie est composée du nom de la variable (un identificateur) sur laquelle va s’appliquer la commande.
+*   la troisième partie correspond à la liste des paramètres : c’est une suite de paramètres (qui sont ici des caractères) séparés par des virgules, encadrée par des accolades.
+*   la dernière partie correspond à la partie option. Elle est constituée par une liste d’options séparées par des virgules, encadrée par des crochets. Une option est représentée soit par un caractère, soit par un ensemble ayant la syntaxe de l’ensemble des paramètres.
+
+Un analyseur récursif descendant LL se construit directement à partir des règles d’une grammaire (en supposant que celle-ci ait certaines bonnes propriétés que l’on précisera plus tard). Un analyseur prédictif LL(1) connaît de plus le premier token non encore reconnu: il peut ainsi déterminer la règle à appliquer en testant ce token et éviter les rebroussements.
+
+Du point de vue de la programmation, il suffit de définir pour chaque variable _X_ de la grammaire une procédure qui sera capable de reconnaître les mots correspondants à chacune des règles associées à la variable _X_. Ainsi, dans cet exemple, pour la partie paramètres, nous avons la règle de grammaire:
+```
+ parametre → {    car   suiteparametre    } 
+
+ parametre →    є
+```
+La variable _parametre_ possède donc deux règles: la procédure parametre associée va prédire grâce au token lu par avance quelle règle appliquer. Il suffit de tester si le token lu est le token correspondant à l’accolade ouvrante, auquel cas on applique la première règle. Appliquer une règle revient à consommer les terminaux (tokens) et/ou à appeler récursivement les non-terminaux (variables) qui la composent. Si le token n’est pas une accolade ouvrante , on applique la seconde règle (en fait, on ne fait rien quand le membre droit d’une règle est є).
+
+D’où le code en Java pour la méthode parametre:
+```
+private void parametre() throws SyntaxException, java.io.IOException{ /* parametre -> TOKEN_ACC_OUV TOKEN_CAR suiteparametre TOKEN_ACC_FER
+                | epsilon */ if (leToken==Lexico.TOKEN_ACC_OUV) { lireLeToken(); verifierToken(Lexico.TOKEN_CAR); lireLeToken(); suiteparametre(); verifierToken(Lexico.TOKEN_ACC_FER); lireLeToken(); } }
+```
+Pour compiler l’analyseur de commandes, récupérez les fichiers [Lexico.java](http://www.fil.univ-lille1.fr/%7Elevaire/as-2010/Lexico.java), [SyntaxException.java](http://www.fil.univ-lille1.fr/%7Elevaire/as-2010/SyntaxException.java) et [Commande.java](http://www.fil.univ-lille1.fr/%7Elevaire/as-2010/Commande.java) et compilez l’ensemble avec la commande
+```
+\[levaire@zywiec TP1\]$ javac Lexico.java SyntaxException.java Commande.java
+```
+Exécuter l’analyseur avec la commande
+```
+\[levaire@zywiec TP1\]$ java Commande Entrez une commande: id1 id2 {a,b,d} \[e, {c, c,c}, r,{r } \] Entrez une commande: , Exception in thread "main" SyntaxException: TOKEN\_IDENTIF token attendu : ligne 1\[dernier token :\] at Commande.erreur(Commande.java:26) at Commande.verifierToken(Commande.java:32) at Commande.nom(Commande.java:52) at Commande.commande(Commande.java:116) at Commande.analyse(Commande.java:127) at Commande.main(Commande.java:137) \[levaire@zywiec TP1\]\\$
+```
+qui vous demande de rentrer au clavier des commandes et ceci jusqu’à ce qu’une commande n’ait pas la syntaxe correcte (auquel cas il y a une exception).
+
+**Manipulation 1**   _Pour comprendre le principe de l’analyse récursive descendante, ajoutez des affichages de messages à chaque début de procédure. Vous constaterez ainsi que les appels récurifs aux procédures correspondent à la construction d’un arbre de dérivation._
+
+### Expressions arithmétiques
+
+Vous allez construire un analyseur récursif descendant pour des expressions arithmétiques simples. La grammaire _G_ de ces expressions est la suivante
+```
+_G_\= (
+
+{identif, entier,+,\-,\*,/,(,)},
+
+_(\* les terminaux \*)_
+
+ 
+
+{expression,suiteExpression, terme,suiteTerme, facteur, atome},
+
+_(\* les non terminaux \*)_ 
+
+ 
+
+expression,
+
+_(\* l’axiome \*)_
+
+ 
+
+_P_)
+
+_(\* les règles de production \*)_
+
+avec _P_\={
+
+expression
+
+→
+
+terme   suiteExpression 
+
+suiteExpression
+
+→
+
++    terme    suiteExpression ∣ є 
+
+suiteExpression
+
+→
+
+\-    terme    suiteExpression ∣ є 
+
+terme
+
+→
+
+facteur    suiteTerme 
+
+suiteTerme
+
+→
+
+\*    facteur    suiteTerme ∣ є 
+
+suiteTerme
+
+→
+
+/    facteur    suiteTerme ∣ є 
+
+facteur
+
+→
+
+(    expression    ) 
+
+facteur
+
+→
+
+atome 
+
+atome
+
+→
+identif ∣ entier ∣ \-    identif ∣  \-    entier 
+}
+```
+  
+
+**Question 1**   _Construire un analyseur récursif descendant pour cette grammaire_[_1_](#note1) _en vous basant sur l’exemple précédent. Utilisez les fichiers_ [_Lexico.java_](http://www.fil.univ-lille1.fr/%7Elevaire/as-2010/Lexico.java)_,_ [_SyntaxException.java_](http://www.fil.univ-lille1.fr/%7Elevaire/as-2010/SyntaxException.java) _et_ [_Syntax.java_](http://www.fil.univ-lille1.fr/%7Elevaire/as-2010/Syntax.java)_. Le dernier fichier contient le squelette d’un analyseur récursif descendant qu’il vous reste à compléter pour reconnaître les expressions arithmétiques._
+
+### Javacc
+
+[javacc](https://javacc.java.net/) est un outil permettant de construire un analyseur descendant pour une grammaire LL(1). Il prend en entrée un fichier de description de la grammaire et produit un ensemble de fichiers source Java qu’il suffit de compiler. Sans entrer dans les détails, un fichier de description est composée de:
+
+1.  une liste facultative d’options: nous n’en utiliserons pas ici;
+2.  une unité de compilation Java placée entre les déclarations PARSER\_BEGIN(parser\_name) et PARSER\_END(parser\_name): c’est du code source Java qui doit contenir une classe de nom parser\_name. javacc rajoutera le code Java nécessaire à la construction d’un analyseur syntaxique, en particulier le constructeur. Celui pourra être invoqué depuis votre code Java pour procéder à l’analyse syntaxique d’un texte: pour les expressions arithmétiques, nous invoquons ainsi le constructeur Expr avec comme qrgument l’entrée standard.
+ ```
+    PARSER\_BEGIN(Expr) _/\*\* Expressions arithmetiques. \*/_ **public** **class** Expr { _/\*\* Main entry point. \*/_ **public** **static** **void** main(String args\[\]) **throws** ParseException { Expr parser = **new** Expr(System.in); parser.listeExpression(); } } PARSER\_END(Expr)
+ ```   
+3.  l’ensemble des règles de production de la grammaire: en plus des règles classiques, javacc y inclut les productions d’expressions régulières liées à la phase d’analyse lexicale. Nous déclarons ainsi les caractères non significatifs (SKIP) et les unités lexicales (tokens ou lexèmes: TOKEN):
+```    
+    SKIP : { " " | "\\t" } TOKEN : { <TOKEN\_ENTIER: \["0"-"9"\](\["0"-"9"\])\* > | <TOKEN\_IDENTIF: \["A"-"Z","a"-"z"\](\["A"-"Z","a"-"z"\])\*> | <TOKEN\_EOL: \["\\n","\\r"\]> | <TOKEN\_PAR\_OUV: "("> | <TOKEN\_PAR\_FER: ")"> | <TOKEN\_PLUS: "+"> | <TOKEN\_MOINS: "-"> | <TOKEN\_MULT: "\*"> | <TOKEN\_DIV: "/"> | <TOKEN\_CRO\_OUV: "\["> | <TOKEN\_CRO\_FER: "\]"> | <TOKEN\_PT\_VIRGULE: ";"> | <TOKEN\_2\_PTS: ":"> | <TOKEN\_CAR: "\[A-Za-z\]"> | <TOKEN\_ACC\_OUV: "{"> | <TOKEN\_ACC\_FER: "}"> | <TOKEN\_VIRGULE: ","> }
+    
+    La grammaire elle-même se décrit par l’intermédiaire de méthodes Java (un peu comme vous avez fait dans l’analyse récursive descendante). On déclare donc une méthode par variable de la grammaire en utilisant une syntaxe particulière:
+    
+    _/\*\* Root production. \*/_ **void** listeExpression(): {} { ( expression() <TOKEN\_EOL> )\* <EOF> } **void** expression() : {} { terme() suiteExpression() { System.out.println("Expression Ok."); } } **void** terme() : {} { facteur() suiteTerme() } **void** suiteExpression() : {} { <TOKEN\_PLUS> terme() suiteExpression() | <TOKEN\_MOINS> terme() suiteExpression() | {} } **void** suiteTerme() : {} { <TOKEN\_MULT> facteur() suiteTerme() | <TOKEN\_DIV> facteur() suiteTerme() | {} } **void** facteur() : {} { <TOKEN\_PAR\_OUV> expression() <TOKEN\_PAR\_FER> | atome() } **void** atome() : {} { <TOKEN\_MOINS> valeur() | valeur() } **void** valeur(): {} { <TOKEN\_IDENTIF> | <TOKEN\_ENTIER> }
+    
+```
+Pour compiler cet exemple, désarchivez [`javacc-6.0.zip`](https://java.net/projects/javacc/downloads/download/javacc-6.0.zip) localement, récupérer le fichier [expr.jj](http://www.fil.univ-lille1.fr/%7Elevaire/as-2010/expr.jj) et exécuter les commandes suivantes:
+```
+levaire@lxo26:~/TPJavacc/expr$ java -cp **path-to**/javacc-6.0/bin/lib/javacc.jar javacc expr.jj ... Parser generated successfully. levaire@lxo26:~/TPJavacc/expr$ javac \*.java
+```
+Un exemple d’exécution de l’analyseur construit:
+```
+levaire@lxo26:~/TPJavacc/expr$ java Expr 3+(aa-4) \* 16 Expression Ok. Expression Ok. 5-6 Expression Ok. ^D levaire@lxo26:~/TPJavacc/expr$
+```
+Il est possible de voir l’arbre de syntaxe abstraite pendant l’analyse en utilisant le mode DEBUG de javacc:
+
+```
+levaire@lxo26:~/TPJavacc/expr$ /**home**/enseign/levaire/TPJavacc/javacc-5.0/bin/javacc -DEBUG\_PARSER=true expr.jj ... Parser generated successfully. levaire@lxo26:~/TPJavacc/expr$ javac \*.java levaire@lxo26:~/TPJavacc/expr$ java Expr Call: listeExpression 3+(aa-4) Call: expression Call: terme Call: facteur Call: atome Call: valeur Consumed token: _<<TOKEN\_ENTIER>_: "3" at line 1 column 1> Return: valeur Return: atome Return: facteur Call: suiteTerme Return: suiteTerme Return: terme Call: suiteExpression Consumed token: _<"+" at line 1 column 2>_ Call: terme Call: facteur Consumed token: _<"(" at line 1 column 3>_ Call: expression Call: terme Call: facteur Call: atome Call: valeur Consumed token: _<<TOKEN\_IDENTIF>_: "aa" at line 1 column 4> Return: valeur Return: atome Return: facteur Call: suiteTerme Return: suiteTerme Return: terme Call: suiteExpression Consumed token: _<"-" at line 1 column 6>_ Call: terme Call: facteur Call: atome Call: valeur Consumed token: _<<TOKEN\_ENTIER>_: "4" at line 1 column 7> Return: valeur Return: atome Return: facteur Call: suiteTerme Return: suiteTerme Return: terme Call: suiteExpression Return: suiteExpression Return: suiteExpression Expression Ok. Return: expression Consumed token: _<")" at line 1 column 8>_ Return: facteur Call: suiteTerme Return: suiteTerme Return: terme Call: suiteExpression Return: suiteExpression Return: suiteExpression Expression Ok. Return: expression Consumed token: _<<TOKEN\_EOL>_: " " at line 1 column 9> ^D
+```
+
+```
+**Question 2**   _Modifiez le fichier_ _expr.jj_ _pour ajouter un token_ _let__, un token_ _\=_ _et les règles suivantes pour les listes d’expressions/affectations:_
+
+listeAffExpr
+
+_→_
+
+AffExprlisteAffExpr
+
+listeAffExpr
+
+_→_
+
+_є _
+
+AffExpr
+
+_→_
+
+expression_ ∣ _affectation
+
+affectation
+
+_→_
+
+_let__identif__\=_expression
+
+expression
+
+_→_
+
+termesuiteExpression
+
+_Vous trouverez la documentation sur le site de_ [_javacc_](https://javacc.java.net/) __.__
+
+_
+```
+* * *
+
+[1](#text1)
+
+Elle n’est pas complétement factorisée à gauche, atome comporte deux règles commencant par TOKEN\_MOINS. Je vous laisse le soin de la factoriser.
+
+* * *
+
+> _Ce document a été traduit de LATEX par_ [_H__E__V__E__A_](http://hevea.inria.fr/)
+
+_

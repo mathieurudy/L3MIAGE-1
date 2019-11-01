@@ -1,0 +1,53 @@
+// spécification JavaCup pour les expressions arithmétiques
+// ici on ne fait que l'analyse syntaxique
+// on affiche chaque règle au moment de sa réduction
+
+import java_cup.runtime.*;
+import java.util.HashMap ;
+
+/* Terminaux (elements sym retournes dans JFlex) */
+
+terminal SET, POINTV, EGAL ;
+terminal PLUS, MOINS, MULT, DIV ; 
+terminal ENTIER, PAROUV, PARFER, IDENT ;
+
+/* Non terminaux */
+
+non terminal instructions, inst, affect, expr, terme, facteur, atome ;
+
+
+/* La grammaire */
+start with instructions ;
+
+instructions ::= inst POINTV instructions {: System.out.println("Réduction instructions -> inst; instructions");:}
+                 | 
+                 {: System.out.println("Réduction instructions -> epsilon"); :};
+inst ::= affect {: System.out.println("Réduction inst -> affect"); :}
+         | 
+         expr {: System.out.println("Réduction inst -> expr"); :} ;                
+affect ::= SET IDENT EGAL expr {: System.out.println("Réduction affect -> set id = expr"); :};
+expr ::= expr PLUS terme  {: System.out.println("Réduction expr -> expr + terme"); :}
+         |
+         expr MOINS terme {: System.out.println("Réduction expr -> expr - terme"); :}
+         |
+         terme {: System.out.println("Réduction expr -> terme"); :};
+terme ::= terme MULT facteur {: System.out.println("Réduction terme -> terme * facteur"); :}
+          |
+          terme DIV facteur {: System.out.println("Réduction terme -> terme / facteur"); :}
+          |
+          facteur {: System.out.println("Réduction terme -> facteur"); :};
+facteur ::= MOINS atome {: System.out.println("Réduction facteur -> - atome"); :}
+            | 
+            PLUS atome {: System.out.println("Réduction facteur -> + atome"); :}
+            |
+            atome {: System.out.println("Réduction facteur -> atome"); :}
+            |
+            PAROUV expr PARFER {: System.out.println("Réduction facteur -> ( expr )"); :} ;
+atome ::= IDENT {: System.out.println("Réduction atome -> id"); :}
+          |
+          ENTIER {: System.out.println("Réduction atome -> entier"); :};
+
+
+
+
+
